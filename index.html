@@ -104,6 +104,13 @@
       padding: 64px 0 48px;
       text-align: center;
     }
+    .hero-mark-link {
+      display: inline-block;
+      border-radius: 22%;
+      transition: transform 0.18s ease;
+    }
+    .hero-mark-link:hover { transform: scale(1.04); }
+    .hero-mark-link:focus-visible { outline: 2px solid var(--indigo-light); outline-offset: 6px; }
     .hero-mark {
       width: 96px; height: 96px;
       border-radius: 22%;
@@ -306,6 +313,7 @@
       <img src="/assets/neary-logo.svg" alt="" width="32" height="32" style="border-radius:8px;vertical-align:middle">
     </a>
     <nav class="top-right" aria-label="Primary">
+      <a href="https://app.n3ary.com" rel="noopener">App</a>
       <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
       <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
     </nav>
@@ -314,13 +322,16 @@
   <main>
 
     <section class="hero">
-      <img class="hero-mark" src="/assets/neary-logo.svg" alt="" width="96" height="96">
+      <a class="hero-mark-link" href="https://app.n3ary.com" rel="noopener" aria-label="Open the n3ary app">
+        <img class="hero-mark" src="/assets/neary-logo.svg" alt="" width="96" height="96">
+      </a>
       <h1>n3ary</h1>
-      <p>Open transit data, offline by default. We're building the smallest app that still answers the question: <em>when's the next bus, even without signal?</em></p>
+      <p>Open transit data, offline by default.</p>
       <div class="pill-row" aria-label="Highlights">
         <span class="pill"><span class="dot" aria-hidden="true"></span>Live GTFS-RT vehicles</span>
         <span class="pill">Offline-first PWA</span>
         <span class="pill">Multi-feed SQL pipeline</span>
+        <span class="pill">Standard GTFS</span>
       </div>
     </section>
 
@@ -349,17 +360,9 @@
 
         <article class="card">
           <h3><span>Cluj-Napoca adapter</span> <span class="tag">n3ary/cluj-napoca-gtfs-adapter</span></h3>
-          <p>The pattern, in the wild. Fuses the Transitous seed, Tranzy.ai's static API, and CTP's own CSV timetables into the cleanest, most complete GTFS Schedule feed for Cluj-Napoca.</p>
+          <p>Takes the Transitous seed, Tranzy.ai's static API, and CTP Cluj-Napoca's own CSV timetables as inputs and produces a single standard <code>.zip</code> GTFS Schedule — the cleanest, most complete feed for the city.</p>
           <div class="links">
             <a href="https://github.com/n3ary/cluj-napoca-gtfs-adapter" rel="noopener">Repo</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3><span>Node library</span> <span class="tag">npm</span></h3>
-          <p>Need to read or write GTFS files in TypeScript or JS? The <code>@neary/gtfs-*</code> packages share the same shape as the app uses internally — small, framework-free, well-typed. Pull one in or read the source.</p>
-          <div class="links">
-            <a href="https://github.com/n3ary/gtfs/tree/main/packages" rel="noopener">See packages</a>
           </div>
         </article>
 
@@ -395,6 +398,10 @@
           <strong>OpenStreetMap</strong>
           <span>The map tiles beneath every map you see here. <a href="https://www.openstreetmap.org" rel="noopener">openstreetmap.org</a></span>
         </li>
+        <li>
+          <strong>Mobility Database</strong>
+          <span>Community catalog of GTFS feeds worldwide — a useful cross-reference for feed coverage. <a href="https://mobilitydatabase.org" rel="noopener">mobilitydatabase.org</a></span>
+        </li>
       </ul>
     </section>
 
@@ -404,6 +411,7 @@
     <div class="row">
       <span>n3ary — open transit data, offline by default.</span>
       <nav class="links" aria-label="Footer">
+        <a href="https://app.n3ary.com" rel="noopener">App</a>
         <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
         <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
         <a href="https://github.com/n3ary/standards/blob/main/LICENSE" rel="noopener">MIT</a>
