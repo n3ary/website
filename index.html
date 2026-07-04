@@ -304,6 +304,48 @@
     .license-note a { color: var(--indigo-light); }
     .license-note a:hover { color: var(--ink); }
 
+    /* --- App CTA (top-left pill) ------------------------------------- */
+
+    .app-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px 4px 4px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    .app-cta:hover {
+      transform: translateY(-1px);
+      border-color: var(--indigo);
+      background: var(--surface-hi);
+    }
+    .app-cta:focus-visible {
+      outline: 2px solid var(--indigo-light);
+      outline-offset: 2px;
+    }
+    .app-cta img {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      flex: 0 0 auto;
+    }
+    .app-cta-text { white-space: nowrap; }
+    .app-cta-arrow {
+      color: var(--indigo-light);
+      font-weight: 600;
+      transition: transform 0.18s ease;
+    }
+    .app-cta:hover .app-cta-arrow { transform: translateX(2px); }
+    @media (max-width: 480px) {
+      .app-cta-text { display: none; }
+      .app-cta { padding: 4px 10px; }
+    }
+
     /* --- Footer ------------------------------------------------------ */
 
     footer {
@@ -325,11 +367,12 @@
 <div class="wrap">
 
   <header class="top">
-    <a href="/" aria-label="n3ary home">
-      <img src="/assets/neary-logo.svg" alt="" width="32" height="32" style="border-radius:8px;vertical-align:middle">
+    <a href="https://app.n3ary.com" rel="noopener" class="app-cta" aria-label="Open the n3ary app">
+      <img src="/assets/neary-logo.svg" alt="" width="24" height="24">
+      <span class="app-cta-text">Try the app</span>
+      <span class="app-cta-arrow" aria-hidden="true">→</span>
     </a>
     <nav class="top-right" aria-label="Primary">
-      <a href="https://app.n3ary.com" rel="noopener">App</a>
       <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
       <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
     </nav>
