@@ -288,6 +288,22 @@
     .credits a { color: var(--indigo-light); }
     .credits a:hover { color: var(--ink); }
 
+    /* --- License note (subtle) --------------------------------------- */
+
+    .license-note {
+      margin: 40px 0 0;
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink-muted);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      text-align: center;
+    }
+    .license-note a { color: var(--indigo-light); }
+    .license-note a:hover { color: var(--ink); }
+
     /* --- Footer ------------------------------------------------------ */
 
     footer {
@@ -373,7 +389,7 @@
       <h2 id="branding-h">Brand</h2>
       <p class="lead">The mark, colors, and don'ts — all open and reusable, documented in one place.</p>
       <div class="branding">
-        <img src="/assets/neary-wordmark.svg" alt="neary wordmark">
+        <img src="/assets/neary-wordmark-light.svg" alt="neary wordmark">
         <p>Indigo is the brand. Green is reserved for the live-vehicle dot. No gradients, no shadows, no tricks. The full brand manual — including everything you shouldn't do — lives on <a href="https://branding.n3ary.com" rel="noopener">branding.n3ary.com</a>.</p>
       </div>
     </section>
@@ -404,6 +420,8 @@
         </li>
       </ul>
     </section>
+
+    <p class="license-note">The code behind these projects is licensed under <a href="https://github.com/n3ary/app/blob/main/LICENSE" rel="noopener">PolyForm Noncommercial 1.0.0</a> — free for individuals, hobbyists, education, and research. Any commercial use needs a separate license from us.</p>
 
   </main>
 
