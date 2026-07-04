@@ -17,4 +17,5 @@ pnpm-debug.log*
 # introduction of a build step without an AGENTS.md update.
 dist/
 build/
+deploy/
 node_modules/
