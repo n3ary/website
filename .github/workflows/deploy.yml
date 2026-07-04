@@ -1,0 +1,42 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Ships the static site to the Cloudflare Pages project 'website' on every
+# push to main. The project auto-creates on the first deploy.
+#
+# The Cloudflare Pages project name stays 'website' (no prefix) — same
+# pattern as n3ary/branding → branding.n3ary.com. Custom domain n3ary.com
+# is attached later via Cloudflare Pages → Custom domains once we move
+# the app under app.n3ary.com.
+
+concurrency:
+  group: website-deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # No build step — the static files in the repo root ARE the bundle.
+          # --commit-dirty=true silences wrangler's "uncommitted changes"
+          # warning (wrangler-action auto-installs itself into the runner's
+          # package.json, but the runner is ephemeral and the mutation
+          # never touches the real repo).
+          command: pages deploy . --project-name=website --branch=main --commit-dirty=true

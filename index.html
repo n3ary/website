@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="color-scheme" content="dark light">
+  <title>n3ary — open transit data, offline by default</title>
+  <meta name="description" content="n3ary is the home of an offline-first GTFS transit app, a multi-feed data pipeline, and a clean GTFS Node library.">
+
+  <meta property="og:title" content="n3ary — open transit data, offline by default">
+  <meta property="og:description" content="An offline-first GTFS transit app, a multi-feed data pipeline, and a clean GTFS Node library.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://website.n3ary.com">
+  <meta property="og:image" content="/assets/social/social-preview.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="n3ary — open transit data, offline by default">
+  <meta name="twitter:description" content="An offline-first GTFS transit app, a multi-feed data pipeline, and a clean GTFS Node library.">
+  <meta name="twitter:image" content="/assets/social/social-preview.png">
+
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/neary-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
+  <style>
+    :root {
+      --indigo: #4F46E5;
+      --indigo-dark: #3730A3;
+      --indigo-light: #818CF8;
+      --green: #22C55E;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-300: #CBD5E1;
+      --slate-400: #94A3B8;
+      --slate-500: #64748B;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1E293B;
+      --slate-900: #0F172A;
+      --slate-950: #020617;
+
+      --bg: var(--slate-900);
+      --surface: var(--slate-800);
+      --surface-hi: var(--slate-700);
+      --ink: #F1F5F9;
+      --ink-strong: #FFFFFF;
+      --ink-muted: #94A3B8;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.16);
+
+      --radius: 14px;
+      --radius-lg: 22px;
+      --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px rgba(0,0,0,0.25);
+      --shadow-hover: 0 1px 0 rgba(255,255,255,0.06) inset, 0 14px 36px rgba(0,0,0,0.35);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #FFFFFF;
+        --surface: var(--slate-50);
+        --surface-hi: #FFFFFF;
+        --ink: var(--slate-800);
+        --ink-strong: var(--slate-900);
+        --ink-muted: var(--slate-600);
+        --line: rgba(15, 23, 42, 0.08);
+        --line-strong: rgba(15, 23, 42, 0.16);
+        --shadow-card: 0 1px 0 #FFF inset, 0 8px 24px rgba(15, 23, 42, 0.06);
+        --shadow-hover: 0 1px 0 #FFF inset, 0 14px 36px rgba(15, 23, 42, 0.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    html {
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    body { min-height: 100dvh; }
+
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--indigo-light); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+    /* --- Header ------------------------------------------------------ */
+
+    .top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0;
+      font-size: 14px;
+    }
+    .top a { color: var(--ink-muted); transition: color 0.15s ease; }
+    .top a:hover { color: var(--ink); }
+    .top-right { display: flex; gap: 20px; align-items: center; }
+
+    /* --- Hero -------------------------------------------------------- */
+
+    .hero {
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+    .hero-mark {
+      width: 96px; height: 96px;
+      border-radius: 22%;
+      box-shadow: 0 14px 40px rgba(79, 70, 229, 0.45);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-mark { animation: none; }
+    }
+    .hero h1 {
+      margin: 28px 0 12px;
+      font-size: clamp(40px, 7vw, 64px);
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      color: var(--ink-strong);
+    }
+    .hero p {
+      margin: 0 auto;
+      max-width: 560px;
+      font-size: clamp(17px, 2.4vw, 20px);
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+    .pill-row {
+      display: flex; gap: 8px; justify-content: center;
+      margin-top: 28px; flex-wrap: wrap;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+    .pill .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+    }
+
+    /* --- Sections ---------------------------------------------------- */
+
+    section.scoped { padding: 56px 0; }
+    section.scoped h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--ink-strong);
+    }
+    section.scoped .lead {
+      margin: 0 0 32px;
+      color: var(--ink-muted);
+      max-width: 640px;
+    }
+
+    /* --- Projects grid ----------------------------------------------- */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      display: flex; flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow-hover);
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink-strong);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(79, 70, 229, 0.12);
+      color: var(--indigo-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .card p {
+      margin: 0 0 16px;
+      color: var(--ink-muted);
+      font-size: 15px;
+    }
+    .card .links {
+      margin-top: auto;
+      display: flex; gap: 14px;
+      font-size: 14px;
+    }
+    .card .links a {
+      color: var(--indigo-light);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .card .links a:hover { color: var(--ink); }
+    .card .links a::after {
+      content: "→";
+      transition: transform 0.18s ease;
+    }
+    .card .links a:hover::after { transform: translateX(2px); }
+
+    /* --- Branding row ------------------------------------------------ */
+
+    .branding {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex; align-items: center; gap: 24px;
+      flex-wrap: wrap;
+    }
+    .branding img { width: 220px; height: auto; }
+    .branding p {
+      margin: 0; flex: 1 1 280px;
+      color: var(--ink-muted); font-size: 15px;
+    }
+    .branding a { color: var(--indigo-light); }
+    .branding a:hover { color: var(--ink); }
+
+    /* --- Credits ----------------------------------------------------- */
+
+    .credits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px 24px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .credits li {
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .credits strong {
+      color: var(--ink-strong);
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .credits span {
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+    .credits a { color: var(--indigo-light); }
+    .credits a:hover { color: var(--ink); }
+
+    /* --- Footer ------------------------------------------------------ */
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 0 48px;
+      margin-top: 64px;
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+    footer .row {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+    }
+    footer .links { display: flex; gap: 18px; flex-wrap: wrap; }
+    footer a:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a href="/" aria-label="n3ary home">
+      <img src="/assets/neary-logo.svg" alt="" width="32" height="32" style="border-radius:8px;vertical-align:middle">
+    </a>
+    <nav class="top-right" aria-label="Primary">
+      <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
+      <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <img class="hero-mark" src="/assets/neary-logo.svg" alt="" width="96" height="96">
+      <h1>n3ary</h1>
+      <p>Open transit data, offline by default. We're building the smallest app that still answers the question: <em>when's the next bus, even without signal?</em></p>
+      <div class="pill-row" aria-label="Highlights">
+        <span class="pill"><span class="dot" aria-hidden="true"></span>Live GTFS-RT vehicles</span>
+        <span class="pill">Offline-first PWA</span>
+        <span class="pill">Multi-feed SQL pipeline</span>
+      </div>
+    </section>
+
+    <section class="scoped" id="projects" aria-labelledby="projects-h">
+      <h2 id="projects-h">What we make</h2>
+      <p class="lead">A small set of repos that all share the same goal — clean transit data, in your hand, before you need it.</p>
+
+      <div class="grid">
+
+        <article class="card">
+          <h3><span>App</span> <span class="tag">n3ary/app</span></h3>
+          <p>The offline-first transit app. Loads GTFS schedules into the browser, reconciles them with live GTFS-RT vehicle positions, and keeps working underground, on a plane, or anywhere your signal gave up.</p>
+          <div class="links">
+            <a href="https://github.com/n3ary/app" rel="noopener">Repo</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span>gtfs</span> <span class="tag">n3ary/gtfs</span></h3>
+          <p>The data side. A monorepo of Node packages — a GTFS spec library, a static loader, a GTFS-RT reconciler, and per-feed SQL + YAML configs that turn dozens of operator feeds into one usable catalog.</p>
+          <div class="links">
+            <a href="https://github.com/n3ary/gtfs" rel="noopener">Repo</a>
+            <a href="https://github.com/n3ary/gtfs/tree/main/packages" rel="noopener">Packages</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span>Cluj-Napoca adapter</span> <span class="tag">n3ary/cluj-napoca-gtfs-adapter</span></h3>
+          <p>The pattern, in the wild. Fuses the Transitous seed, Tranzy.ai's static API, and CTP's own CSV timetables into the cleanest, most complete GTFS Schedule feed for Cluj-Napoca.</p>
+          <div class="links">
+            <a href="https://github.com/n3ary/cluj-napoca-gtfs-adapter" rel="noopener">Repo</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span>Node library</span> <span class="tag">npm</span></h3>
+          <p>Need to read or write GTFS files in TypeScript or JS? The <code>@neary/gtfs-*</code> packages share the same shape as the app uses internally — small, framework-free, well-typed. Pull one in or read the source.</p>
+          <div class="links">
+            <a href="https://github.com/n3ary/gtfs/tree/main/packages" rel="noopener">See packages</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="scoped" id="branding" aria-labelledby="branding-h">
+      <h2 id="branding-h">Brand</h2>
+      <p class="lead">The mark, colors, and don'ts — all open and reusable, documented in one place.</p>
+      <div class="branding">
+        <img src="/assets/neary-wordmark.svg" alt="neary wordmark">
+        <p>Indigo is the brand. Green is reserved for the live-vehicle dot. No gradients, no shadows, no tricks. The full brand manual — including everything you shouldn't do — lives on <a href="https://branding.n3ary.com" rel="noopener">branding.n3ary.com</a>.</p>
+      </div>
+    </section>
+
+    <section class="scoped" id="credits" aria-labelledby="credits-h">
+      <h2 id="credits-h">Thanks to</h2>
+      <p class="lead">None of this would exist without open data and the projects that curate it.</p>
+      <ul class="credits">
+        <li>
+          <strong>Transitous</strong>
+          <span>The community-maintained multi-feed GTFS catalog we seed from. <a href="https://transitous.org" rel="noopener">transitous.org</a></span>
+        </li>
+        <li>
+          <strong>Tranzy.ai</strong>
+          <span>Static GTFS for operators that don't publish their own schedule. <a href="https://tranzy.ai" rel="noopener">tranzy.ai</a></span>
+        </li>
+        <li>
+          <strong>CTP Cluj-Napoca</strong>
+          <span>The local operator, whose CSV timetables carry the routes not yet covered upstream.</span>
+        </li>
+        <li>
+          <strong>OpenStreetMap</strong>
+          <span>The map tiles beneath every map you see here. <a href="https://www.openstreetmap.org" rel="noopener">openstreetmap.org</a></span>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="row">
+      <span>n3ary — open transit data, offline by default.</span>
+      <nav class="links" aria-label="Footer">
+        <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
+        <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
+        <a href="https://github.com/n3ary/standards/blob/main/LICENSE" rel="noopener">MIT</a>
+      </nav>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
