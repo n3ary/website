@@ -30,15 +30,14 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Ensure Pages project exists
-        # wrangler 4.x no longer auto-creates Pages projects on `pages deploy`.
-        # Create it idempotently first so this workflow is re-runnable from a
-        # clean slate. The `|| true` swallows the "project already exists"
-        # error so the deploy step below runs unconditionally.
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create website --production-branch=main || true
+        # wrangler 4.x no longer auto-creates Pages projects on `pages deploy`,
+        # and wrangler-action runs `wrangler <command>` directly (no bash), so
+        # we use a `run:` step for the create so we can `|| true` cleanly. The
+        # step is a no-op once the project exists.
+        run: npx --yes wrangler@4 pages project create website --production-branch=main || true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
