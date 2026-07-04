@@ -29,16 +29,23 @@ Cloudflare Pages → `website` → Deployments.
 
 ## Adding a custom domain
 
-The plan is to attach `n3ary.com` (apex) to this project and move the app
-to `app.n3ary.com`. When the time comes:
+`n3ary.com` (apex) is already attached to this project as a custom
+domain. `app.n3ary.com` is attached to the app's Pages project (`neary`).
+The DNS apex is a proxied CNAME flattening to `website-b4a.pages.dev`,
+and `app.n3ary.com` is a proxied CNAME to the app's deployment.
 
-1. In Cloudflare Pages → `website` → **Custom domains** → add `n3ary.com`.
-2. The DNS records (CNAME for `n3ary.com`, then `app` for the app) get added
-   automatically if the zone is on Cloudflare.
-3. The app repo (`n3ary/app`) will need its `_redirects` or Netlify-to-
-   Pages config updated to serve from the subdomain.
+If you ever need to detach or re-attach a domain:
 
-This is a one-person, afternoon job once the domain is on Cloudflare.
+1. Cloudflare Pages → project → **Custom domains** to manage the
+   project side.
+2. The DNS zone (`n3ary.com`, hosted on Cloudflare) is in the
+   `~/.config/n3ary/cloudflare.env`-scoped token. Use that token (or
+   re-mint per the silent-scope-drop gotcha) to flip records.
+
+> [!WARNING]
+> Don't point the apex back at the app's Pages deployment without
+> detaching it from the website project first — CF Pages can't have
+> the same custom domain on two projects simultaneously.
 
 ## Vendored standards
 

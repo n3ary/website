@@ -1,9 +1,9 @@
 # n3ary/website
 
 The static, single-page marketing site for the
-[n3ary](https://github.com/n3ary) org. Lives at `website.n3ary.com`, with
-[n3ary.com](https://n3ary.com) as the planned apex once we move the app
-under `app.n3ary.com`.
+[n3ary](https://github.com/n3ary) org. Lives at the apex
+[n3ary.com](https://n3ary.com). The app lives at
+[app.n3ary.com](https://app.n3ary.com).
 
 ## What's here
 
@@ -20,14 +20,16 @@ commit, push — the workflow takes it from there.
 
 ## Live deployment
 
-- **Domain**: <https://website.n3ary.com>
-- **Cloudflare Pages project**: `website`
+- **Apex**: <https://n3ary.com> — the marketing site
+- **App**: <https://app.n3ary.com> — the SvelteKit PWA (separate Cloudflare Pages project)
+- **Cloudflare Pages project**: `website` (auto-creates on first deploy — the workflow handles it)
+- **Custom domain**: `n3ary.com` attached to the `website` project; DNS apex is a CNAME flattening to `website-b4a.pages.dev`
 - **Deploys on**: every push to `main`
 
 The deploy workflow uses `secrets.CLOUDFLARE_API_TOKEN` and
 `secrets.CLOUDFLARE_ACCOUNT_ID`. Add them via
 **Repo → Settings → Secrets and variables → Actions** before the first
-push. Wrangler auto-creates the Pages project on first deploy.
+push.
 
 ## Brand
 
