@@ -405,19 +405,19 @@
         </article>
 
         <article class="card">
-          <h3><span>Gtfs</span> <span class="tag">n3ary/gtfs</span></h3>
-          <p>The data side. A monorepo of Node packages — a GTFS spec library, a static loader, a GTFS-RT reconciler, and per-feed SQL + YAML configs that turn dozens of operator feeds into one usable catalog.</p>
+          <h3><span>Gtfs</span> <span class="tag">n3ary/gtfs-sql</span></h3>
+          <p>The data side. A feed-agnostic orchestrator that reads each operator's source via a per-feed adapter package, builds a sqlite blob of the consolidated GTFS Schedule, and publishes both the sqlite and the raw <code>.gtfs.zip</code> to R2 for the app to consume offline.</p>
           <div class="links">
-            <a href="https://github.com/n3ary/gtfs" rel="noopener">Repo</a>
-            <a href="https://github.com/n3ary/gtfs/tree/main/packages" rel="noopener">Packages</a>
+            <a href="https://github.com/n3ary/gtfs-sql" rel="noopener">Repo</a>
+            <a href="https://github.com/n3ary/gtfs-sql/tree/main/packages" rel="noopener">Packages</a>
           </div>
         </article>
 
         <article class="card">
-          <h3><span>Cluj-Napoca adapter</span> <span class="tag">n3ary/cluj-napoca-gtfs-adapter</span></h3>
-          <p>Takes the Transitous seed, Tranzy.ai's static API, and CTP Cluj-Napoca's own CSV timetables as inputs and produces a single standard <code>.zip</code> GTFS Schedule — the cleanest, most complete feed for the city.</p>
+          <h3><span>Per-feed adapters</span> <span class="tag">n3ary/gtfs-adapters</span></h3>
+          <p>One npm package per operator. Each adapter owns the source-specific knowledge — CSVs to scrape, APIs to call, route-color quirks, GTFS-RT recovery — and exposes a generic <code>/ingest</code> + <code>/static</code> surface that <code>n3ary/gtfs-sql</code> drives without per-feed code.</p>
           <div class="links">
-            <a href="https://github.com/n3ary/cluj-napoca-gtfs-adapter" rel="noopener">Repo</a>
+            <a href="https://github.com/n3ary/gtfs-adapters" rel="noopener">Repo</a>
           </div>
         </article>
 
