@@ -1,0 +1,20 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+
+# Shared base PR-validation lives in n3ary/actions. enable-drift-check
+# is false: this repo doesn't vendor n3ary/standards. The line-length
+# check excludes markdown by default, so the long index.html lines
+# (which are HTML, not Markdown) will be checked - fix any offenders
+# if the check fires.
+
+permissions:
+  contents: read
+
+jobs:
+  shared:
+    uses: n3ary/actions/.github/workflows/pr-validation.yml@v1
+    with:
+      enable-drift-check: false
