@@ -27,6 +27,11 @@ every push to `main`. The Pages project serves at `website.n3ary.com`.
 If a deploy is failing: read the GH Actions log first, then check
 Cloudflare Pages → `website` → Deployments.
 
+Before opening a PR that touches anything under `.github/`, run
+`gh pr list --state open` to confirm no in-flight PR is already
+refactoring CI on the same files. Two parallel CI refactors both
+end up stale — one of them lands, the other gets closed.
+
 ## Adding a custom domain
 
 `n3ary.com` (apex) is already attached to this project as a custom
