@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Ensure Pages project exists
         # wrangler 4.x no longer auto-creates Pages projects on `pages deploy`,
