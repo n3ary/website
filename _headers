@@ -1,11 +1,36 @@
-# Cloudflare Pages — cache + security headers.
+# Cloudflare Pages headers — cache + security headers.
 # Matches the pattern used across the n3ary org.
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
 /*
-  X-Content-Type-Options: nosniff
+  # HSTS — force HTTPS for one year across all subdomains of n3ary.com.
+  # Deliberately omits `preload`: preload is a one-way door (browsers cache
+  # for the max-age) and needs a separate submission to hstspreload.org
+  # after a 1-year soak. Tracked by n3ary/app#186.
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+  # Clickjacking protection. Kept for parity with the n3ary/app Pages project
+  # and to defend against regressions.
   X-Frame-Options: DENY
+
+  # MIME sniffing off. Same rationale as the HSTS line — keep all subdomains
+  # aligned so Security Insights doesn't re-flag this on the dashboard.
+  X-Content-Type-Options: nosniff
+
+  # Referrer policy — same-origin / strict-origin.
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: interest-cohort=()
+
+  # Permissions policy — opt out of FLoC/Topics + disable every feature the
+  # marketing page does not use. The page is a static HTML doc with no JS,
+  # so the closed-everything posture is appropriate.
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+
+  # Content-Security-Policy — strict, the page has no JS, no fonts, no forms,
+  # no fetch, and no iframes. `style-src 'unsafe-inline'` is the one
+  # pragmatic concession: the marketing page keeps a 300+ line inline
+  # <style> block in index.html / 404.html, and a per-block hash would
+  # turn every style edit into a CSP edit. Origin-restricted `img-src 'self'`
+  # covers the local /assets/ PNGs/SVG. Tracked by n3ary/app#186.
+  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
