@@ -50,6 +50,24 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
+      - name: Inject build version into footer
+        # Replace the <!--BUILD_VERSION--> placeholder in index.html with
+        # today's date in Europe/Bucharest (matches version-management.md).
+        # Result: footer shows e.g. "v26.7.11" -- the actual deploy time,
+        # not the most recent PR-merge time. The post-sed grep is a safety
+        # net: if the placeholder didn't match, fail loudly instead of
+        # deploying a footer that shows the literal "v" with nothing after.
+        run: |
+          DATE=$(TZ=Europe/Bucharest date +%y.%-m.%-d)
+          sed -i.bak "s|<!--BUILD_VERSION-->|${DATE}|g" index.html
+          rm -f index.html.bak
+          if grep -q '<!--BUILD_VERSION-->' index.html; then
+            echo "::error::BUILD_VERSION placeholder still present after sed"
+            exit 1
+          fi
+          echo "Injected version: v${DATE}"
+          grep -E 'class="version"' index.html
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:
