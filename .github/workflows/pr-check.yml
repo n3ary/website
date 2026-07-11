@@ -1,0 +1,31 @@
+# ----------------------------------------------------------------------------
+# [check] PR validation (on PR)
+#
+# Validates every PR via the shared n3ary/actions base (ASCII check,
+# standards drift disabled because website does not vendor standards).
+# No repo-specific validate job (no build/test pipeline; the static
+# file is the site). Never pushes to the branch.
+#
+# Trigger:     pull_request
+# Permissions: contents: read
+# Secrets:     none
+# Owner:       @ciotlosm
+# Run time:    ~30 sec
+# ----------------------------------------------------------------------------
+name: '[check] PR validation (on PR)'
+
+on:
+  pull_request:
+    branches: [main]
+
+# Shared base PR-validation lives in n3ary/actions. enable-drift-check
+# is false: this repo doesn't vendor n3ary/standards.
+
+permissions:
+  contents: read
+
+jobs:
+  shared:
+    uses: n3ary/actions/.github/workflows/pr-validation.yml@v22
+    with:
+      enable-drift-check: false
