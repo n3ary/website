@@ -1,17 +1,23 @@
-name: Deploy to Cloudflare Pages
+# ----------------------------------------------------------------------------
+# [deploy] marketing site to Cloudflare Pages (on push to main + manual)
+#
+# Ships the static site to the Cloudflare Pages project 'website' on every
+# push to main. The project auto-creates on the first deploy. The static
+# files (index.html, 404.html, assets/, _headers) ARE the bundle; no build
+# step. Custom domain n3ary.com is attached to the Pages project.
+#
+# Trigger:     push to main, manual
+# Permissions: contents: read
+# Secrets:     CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+# Owner:       @ciotlosm
+# Run time:    ~1-2 min
+# ----------------------------------------------------------------------------
+name: '[deploy] marketing site to Cloudflare Pages (on push to main + manual)'
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-
-# Ships the static site to the Cloudflare Pages project 'website' on every
-# push to main. The project auto-creates on the first deploy.
-#
-# The Cloudflare Pages project name stays 'website' (no prefix) — same
-# pattern as n3ary/branding → branding.n3ary.com. Custom domain n3ary.com
-# is attached later via Cloudflare Pages → Custom domains once we move
-# the app under app.n3ary.com.
 
 concurrency:
   group: website-deploy
@@ -44,7 +50,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # No build step — the static files in the repo root ARE the bundle.
+          # No build step -- the static files in the repo root ARE the bundle.
           # --commit-dirty=true silences wrangler's "uncommitted changes"
           # warning (wrangler-action auto-installs itself into the runner's
           # package.json, but the runner is ephemeral and the mutation
