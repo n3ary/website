@@ -160,6 +160,13 @@
       font-weight: 700;
       color: var(--ink-strong);
     }
+    section.scoped h3 {
+      margin: 32px 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+      color: var(--ink-strong);
+    }
     section.scoped .lead {
       margin: 0 0 28px;
       color: var(--ink-muted);
@@ -635,30 +642,6 @@
       </div>
     </section>
 
-    <section class="scoped" id="speed" aria-labelledby="speed-h">
-      <h2 id="speed-h">Speed and busy hours, per feed</h2>
-      <p class="lead">For each feed we publish pre-configured speed profiles (peak / off-peak / night) and busy windows. The static pipeline uses them to propagate schedules to intermediate stops when the upstream feed only publishes terminals — no more "the bus magically teleports between two published times".</p>
-
-      <div class="speed" aria-label="Cluj-Napoca defaults (illustrative)">
-        <h3>Cluj-Napoca · timing</h3>
-        <p>From <code>feeds/cluj-napoca/config.json</code>. Every other configured feed ships its own values.</p>
-        <dl>
-          <dt>Speed (peak)</dt>
-          <dd>14 km/h</dd>
-          <dt>Speed (off-peak)</dt>
-          <dd>22 km/h</dd>
-          <dt>Speed (night)</dt>
-          <dd>28 km/h</dd>
-          <dt>Peak windows</dt>
-          <dd>07:00–09:30, 16:00–19:00</dd>
-          <dt>Night window</dt>
-          <dd>22:30–05:30</dd>
-          <dt>Dwell</dt>
-          <dd>20 s</dd>
-        </dl>
-      </div>
-    </section>
-
     <section class="scoped" id="adapters" aria-labelledby="adapters-h">
       <h2 id="adapters-h">Adapters</h2>
       <p class="lead">Every per-feed decision lives in an adapter package. The generic publisher has zero per-feed code; the source reconciliation, the per-feed validations, and the extensions that don't fit the public spec all sit inside one operator's adapter. The contract is the same for every adapter; the per-feed logic is whatever that feed needs.</p>
@@ -685,15 +668,37 @@
         </article>
       </div>
 
-      <h3 id="adapters-prod-h">In production</h3>
-      <p>Adapters that ship today. Each one is a separate <code>@n3ary/gtfs-adapter-&lt;city&gt;</code> package in <a href="https://github.com/n3ary/gtfs-adapters" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-adapters</a>. To add a new adapter, copy the <code>cluj-napoca</code> package, replace the per-feed logic, and ship a new <code>feeds/&lt;city&gt;/config.json</code> entry.</p>
+      <h3 id="adapters-speed-h">Speed and busy hours, per feed</h3>
+      <p>For each feed we publish pre-configured speed profiles (peak / off-peak / night) and busy windows. The static pipeline uses them to propagate schedules to intermediate stops when the upstream feed only publishes terminals - no more "the bus magically teleports between two published times".</p>
+
+      <div class="speed" aria-label="Cluj-Napoca defaults (illustrative)">
+        <h3>Cluj-Napoca · timing</h3>
+        <p>From <code>feeds/cluj-napoca/config.json</code>. Every other configured feed ships its own values.</p>
+        <dl>
+          <dt>Speed (peak)</dt>
+          <dd>14 km/h</dd>
+          <dt>Speed (off-peak)</dt>
+          <dd>22 km/h</dd>
+          <dt>Speed (night)</dt>
+          <dd>28 km/h</dd>
+          <dt>Peak windows</dt>
+          <dd>07:00-09:30, 16:00-19:00</dd>
+          <dt>Night window</dt>
+          <dd>22:30-05:30</dd>
+          <dt>Dwell</dt>
+          <dd>20 s</dd>
+        </dl>
+      </div>
+
+      <h3 id="adapters-cluj-h">Cluj-Napoca</h3>
+      <p>One adapter, in full. The most complete example so far - shown here so the per-feed shape is concrete. To add a new adapter, copy the <code>cluj-napoca</code> package, replace the per-feed logic, and ship a new <code>feeds/&lt;city&gt;/config.json</code> entry in <a href="https://github.com/n3ary/gtfs-publisher" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-publisher</a>.</p>
 
       <article class="adapter">
         <header class="adapter-head">
           <h4>Cluj-Napoca</h4>
           <span class="feed-badge">CTP Cluj-Napoca</span>
         </header>
-        <p class="adapter-lead">The most complete adapter so far. Three upstream sources reconciled into one feed, with route tags and a dedicated school-transport network on top.</p>
+        <p class="adapter-lead">Three upstream sources reconciled into one feed, with route tags and a dedicated school-transport network on top.</p>
 
         <div class="grid">
 
@@ -703,7 +708,7 @@
             </span>
             <div>
               <h4>Three sources, one feed</h4>
-              <p>Transitous (curated structure) + Tranzy.ai (live-updated static) + CTP's own CSV timetables (authoritative departure times) — reconciled into one <code>.gtfs.zip</code>.</p>
+              <p>Transitous (curated structure) + Tranzy.ai (live-updated static) + CTP's own CSV timetables (authoritative departure times) - reconciled into one <code>.gtfs.zip</code>.</p>
             </div>
           </div>
 
@@ -723,7 +728,7 @@
             </span>
             <div>
               <h4>Route tags extension</h4>
-              <p>Night, metropolitan, airport express — derived from the route's short name (<code>25N</code>, <code>M26</code>, etc.) and stored in <code>_route_tags</code>. The app uses them as filters.</p>
+              <p>Night, metropolitan, airport express - derived from the route's short name (<code>25N</code>, <code>M26</code>, etc.) and stored in <code>_route_tags</code>. The app uses them as filters.</p>
               <span class="tag">extension</span>
             </div>
           </div>
@@ -734,7 +739,7 @@
             </span>
             <div>
               <h4>GTFS networks + route_networks</h4>
-              <p>TE (Transport Elevi, the school transport lines) get their own network surface via the public spec — no extension table needed — so school runs and regular transit share the same map view.</p>
+              <p>TE (Transport Elevi, the school transport lines) get their own network surface via the public spec - no extension table needed - so school runs and regular transit share the same map view.</p>
             </div>
           </div>
 
@@ -743,7 +748,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </span>
             <div>
-              <h4>CTP CSV → proper GTFS</h4>
+              <h4>CTP CSV to proper GTFS</h4>
               <p>CTP publishes timetables as CSVs. The adapter converts them to spec-compliant <code>stop_times</code>, including the GTFS Frequency model for headway-based routes.</p>
             </div>
           </div>
@@ -764,7 +769,7 @@
             </span>
             <div>
               <h4>Pre-configured speed &amp; busy hours</h4>
-              <p>Peak, off-peak, and night speeds plus peak windows — the static pipeline uses them to fill in intermediate stops when the upstream only publishes terminals.</p>
+              <p>Peak, off-peak, and night speeds plus peak windows - the static pipeline uses them to fill in intermediate stops when the upstream only publishes terminals.</p>
             </div>
           </div>
 
@@ -788,13 +793,13 @@
         <header class="adapter-head">
           <h4>More coming</h4>
         </header>
-        <p class="adapter-lead">The contract is open. New adapters land here as more operators come online — each one is a separate <code>n3ary/gtfs-adapter-&lt;city&gt;</code> package, not a change to this site.</p>
+        <p class="adapter-lead">The contract is open. New adapters land here as more operators come online - each one is a separate <code>n3ary/gtfs-adapter-&lt;city&gt;</code> package, not a change to this site.</p>
       </article>
     </section>
 
-    <section class="scoped" id="org" aria-labelledby="org-h">
-      <h2 id="org-h">The org around the pipeline</h2>
-      <p class="lead">The data pipeline is the core, but a few small repos keep every other repo in line. Each one ships independently and stays small enough to read in one sitting.</p>
+    <section class="scoped" id="repos" aria-labelledby="repos-h">
+      <h2 id="repos-h">The rest of the repos</h2>
+      <p class="lead">The data pipeline is the core, but five small repos keep every other repo in line. Each one ships independently and stays small enough to read in one sitting.</p>
 
       <div class="grid">
 
