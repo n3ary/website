@@ -29,12 +29,11 @@ permissions:
 
 jobs:
   deploy:
-    # Skip deploy when the release bot (n3ary-release-bot) is the actor.
-    # The bot's release/calver-* PRs land on main as a squash merge; the
-    # `push` event fires with `github.actor = n3ary-release-bot[bot]`.
-    # website has no version concept, so the bot's commits are
-    # empty. Re-deploying is harmless but wasteful.
-    if: "!contains(github.event.head_commit.message, '[skip ci]') && github.actor == 'n3ary-release-bot[bot]'"
+    # Deploy on release-bot pushes (auto-bump PRs land as squash merges with
+    # github.actor = n3ary-release-bot[bot]), and on manual workflow_dispatch.
+    # workflow_dispatch has no head_commit, so guard the contains() with a
+    # truthy check; the actor check is always false for manual dispatches.
+    if: "(github.event.head_commit == null || !contains(github.event.head_commit.message, '[skip ci]')) && (github.event_name == 'workflow_dispatch' || github.actor == 'n3ary-release-bot[bot]')"
     runs-on: ubuntu-latest
 
     steps:
