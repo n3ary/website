@@ -3,8 +3,9 @@
 #
 # Ships the static site to the Cloudflare Pages project 'website' on every
 # push to main. The project auto-creates on the first deploy. The static
-# files (index.html, 404.html, assets/, _headers) ARE the bundle; no build
-# step. Custom domain n3ary.com is attached to the Pages project.
+# files (index.html, developers/index.html, 404.html, assets/, _headers)
+# ARE the bundle; no build step. Custom domain n3ary.com is attached to
+# the Pages project.
 #
 # Trigger:     push to main, manual
 # Permissions: contents: read
@@ -51,22 +52,25 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Inject build version into footer
-        # Replace the <!--BUILD_VERSION--> placeholder in index.html with
-        # today's date in Europe/Bucharest (matches version-management.md).
-        # Result: footer shows e.g. "v26.7.11" -- the actual deploy time,
-        # not the most recent PR-merge time. The post-sed grep is a safety
-        # net: if the placeholder didn't match, fail loudly instead of
-        # deploying a footer that shows the literal "v" with nothing after.
+        # Replace the <!--BUILD_VERSION--> placeholder in every page that
+        # carries one with today's date in Europe/Bucharest (matches
+        # version-management.md). Result: footer shows e.g. "v26.7.11" --
+        # the actual deploy time, not the most recent PR-merge time.
+        # The post-sed grep per file is a safety net: if any placeholder
+        # didn't match, fail loudly instead of deploying a footer that
+        # shows the literal "v" with nothing after.
         run: |
           DATE=$(TZ=Europe/Bucharest date +%y.%-m.%-d)
-          sed -i.bak "s|<!--BUILD_VERSION-->|${DATE}|g" index.html
-          rm -f index.html.bak
-          if grep -q '<!--BUILD_VERSION-->' index.html; then
-            echo "::error::BUILD_VERSION placeholder still present after sed"
-            exit 1
-          fi
-          echo "Injected version: v${DATE}"
-          grep -E 'class="version"' index.html
+          for PAGE in index.html developers/index.html; do
+            sed -i.bak "s|<!--BUILD_VERSION-->|${DATE}|g" "$PAGE"
+            rm -f "$PAGE.bak"
+            if grep -q '<!--BUILD_VERSION-->' "$PAGE"; then
+              echo "::error::BUILD_VERSION placeholder still present in $PAGE after sed"
+              exit 1
+            fi
+            echo "Injected v${DATE} into $PAGE"
+            grep -E 'class="version"' "$PAGE"
+          done
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
