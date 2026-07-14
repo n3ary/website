@@ -291,6 +291,54 @@
     }
     .card .links a:hover::after { transform: translateX(2px); }
 
+    /* --- Adapter block (per-feed sub-section) ------------------------- */
+
+    .adapter {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-top: 16px;
+    }
+    .adapter-head {
+      display: flex; align-items: baseline; gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .adapter-head h4 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink-strong);
+    }
+    .feed-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(79, 70, 229, 0.12);
+      color: var(--indigo-light);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .adapter-lead {
+      margin: 0 0 20px;
+      color: var(--ink-muted);
+      font-size: 15px;
+      max-width: 680px;
+    }
+    .adapter.coming {
+      background: transparent;
+      border: 1px dashed var(--line-strong);
+      text-align: center;
+    }
+    .adapter.coming .adapter-head { justify-content: center; }
+    .adapter.coming .adapter-lead {
+      margin: 0;
+      font-size: 14px;
+    }
+
     /* --- Spec badges row --------------------------------------------- */
 
     .specs {
@@ -307,21 +355,16 @@
     .spec strong { color: var(--ink-strong); font-weight: 600; }
     .spec span { color: var(--ink-muted); font-size: 13px; }
 
-    /* --- Cluj nested list -------------------------------------------- */
+    /* --- Adapter feature card ----------------------------------------- */
 
-    .cluj-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 12px;
-    }
-    .cluj-item {
+    .adapter-item {
       display: flex; gap: 12px;
       padding: 16px;
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--line);
       border-radius: var(--radius);
     }
-    .cluj-item .ico {
+    .adapter-item .ico {
       flex: 0 0 auto;
       width: 28px; height: 28px;
       border-radius: 8px;
@@ -329,19 +372,19 @@
       color: var(--indigo-light);
       display: inline-flex; align-items: center; justify-content: center;
     }
-    .cluj-item h4 {
+    .adapter-item h4 {
       margin: 0 0 4px;
       font-size: 15px;
       font-weight: 600;
       color: var(--ink-strong);
     }
-    .cluj-item p {
+    .adapter-item p {
       margin: 0;
       color: var(--ink-muted);
       font-size: 14px;
       line-height: 1.5;
     }
-    .cluj-item .tag {
+    .adapter-item .tag {
       display: inline-block;
       margin-top: 6px;
       padding: 1px 6px;
@@ -617,8 +660,11 @@
     </section>
 
     <section class="scoped" id="adapters" aria-labelledby="adapters-h">
-      <h2 id="adapters-h">Per-feed adapters</h2>
-      <p class="lead"><a href="https://github.com/n3ary/gtfs-adapters" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-adapters</a> is where every per-feed decision lives. The publisher dynamic-imports the adapter at runtime — <code>${publisher}/ingest</code> returns a zip, <code>${publisher}/static</code> adds sqlite columns, <code>${publisher}/rt</code> registers RT quirks.</p>
+      <h2 id="adapters-h">Adapters</h2>
+      <p class="lead">Every per-feed decision lives in an adapter package. The generic publisher has zero per-feed code; the source reconciliation, the per-feed validations, and the extensions that don't fit the public spec all sit inside one operator's adapter. The contract is the same for every adapter; the per-feed logic is whatever that feed needs.</p>
+
+      <h3 id="adapters-contract-h">The contract</h3>
+      <p>Three subpaths, all dynamic-imported by the orchestrator. An adapter is just a published npm package that exposes them.</p>
 
       <div class="stack">
         <article class="stack-card">
@@ -638,99 +684,112 @@
           </div>
         </article>
       </div>
-    </section>
 
-    <section class="scoped" id="cluj" aria-labelledby="cluj-h">
-      <h2 id="cluj-h">Cluj-Napoca, end to end</h2>
-      <p class="lead">The only adapter in production today. <code>@n3ary/gtfs-adapter-cluj-napoca</code> reconciles three upstream sources, fixes GTFS-RT direction, and extends the public spec with the things CTP's published feed doesn't carry.</p>
+      <h3 id="adapters-prod-h">In production</h3>
+      <p>Adapters that ship today. Each one is a separate <code>@n3ary/gtfs-adapter-&lt;city&gt;</code> package in <a href="https://github.com/n3ary/gtfs-adapters" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-adapters</a>. To add a new adapter, copy the <code>cluj-napoca</code> package, replace the per-feed logic, and ship a new <code>feeds/&lt;city&gt;/config.json</code> entry.</p>
 
-      <div class="cluj-grid">
+      <article class="adapter">
+        <header class="adapter-head">
+          <h4>Cluj-Napoca</h4>
+          <span class="feed-badge">CTP Cluj-Napoca</span>
+        </header>
+        <p class="adapter-lead">The most complete adapter so far. Three upstream sources reconciled into one feed, with route tags and a dedicated school-transport network on top.</p>
 
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </span>
-          <div>
-            <h4>Three sources, one feed</h4>
-            <p>Transitous (curated structure) + Tranzy.ai (live-updated static) + CTP's own CSV timetables (authoritative departure times) — reconciled into one <code>.gtfs.zip</code>.</p>
+        <div class="grid">
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+            <div>
+              <h4>Three sources, one feed</h4>
+              <p>Transitous (curated structure) + Tranzy.ai (live-updated static) + CTP's own CSV timetables (authoritative departure times) — reconciled into one <code>.gtfs.zip</code>.</p>
+            </div>
           </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </span>
+            <div>
+              <h4>Direction fix for GTFS-RT</h4>
+              <p>CTP's live vehicle stream doesn't always carry <code>direction_id</code> reliably. The adapter recovers it from the trip's <code>route_id</code> + shape, so a vehicle's direction in the app matches the schedule view.</p>
+            </div>
+          </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+            </span>
+            <div>
+              <h4>Route tags extension</h4>
+              <p>Night, metropolitan, airport express — derived from the route's short name (<code>25N</code>, <code>M26</code>, etc.) and stored in <code>_route_tags</code>. The app uses them as filters.</p>
+              <span class="tag">extension</span>
+            </div>
+          </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><circle cx="8.5" cy="14.5" r="1" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1" fill="currentColor"/></svg>
+            </span>
+            <div>
+              <h4>GTFS networks + route_networks</h4>
+              <p>TE (Transport Elevi, the school transport lines) get their own network surface via the public spec — no extension table needed — so school runs and regular transit share the same map view.</p>
+            </div>
+          </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </span>
+            <div>
+              <h4>CTP CSV → proper GTFS</h4>
+              <p>CTP publishes timetables as CSVs. The adapter converts them to spec-compliant <code>stop_times</code>, including the GTFS Frequency model for headway-based routes.</p>
+            </div>
+          </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a14.5 14.5 0 0 1 0 20"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/></svg>
+            </span>
+            <div>
+              <h4>OKLab route color fix</h4>
+              <p>Tranzy's published colors don't match the real-world livery. The adapter rewrites them using the OKLab color method so the map matches what you see at the stop.</p>
+            </div>
+          </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </span>
+            <div>
+              <h4>Pre-configured speed &amp; busy hours</h4>
+              <p>Peak, off-peak, and night speeds plus peak windows — the static pipeline uses them to fill in intermediate stops when the upstream only publishes terminals.</p>
+            </div>
+          </div>
+
+          <div class="adapter-item">
+            <span class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </span>
+            <div>
+              <h4>Coming soon: Tranzy GTFS-RT</h4>
+              <p>Tranzy exposes a non-standard live feed. The adapter will convert it to standard protobuf GTFS-RT so the same <code>gtfs-rt</code> server can serve it.</p>
+              <span class="tag">future</span>
+            </div>
+          </div>
+
         </div>
 
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </span>
-          <div>
-            <h4>Direction fix for GTFS-RT</h4>
-            <p>CTP's live vehicle stream doesn't always carry <code>direction_id</code> reliably. The adapter recovers it from the trip's <code>route_id</code> + shape, so a vehicle's direction in the app matches the schedule view.</p>
-          </div>
-        </div>
+        <p style="margin-top: 20px; font-size: 14px; color: var(--ink-muted);">Full architecture, assemble rules, quirks, and known limitations live in the adapter repo: <a href="https://github.com/n3ary/gtfs-adapters/tree/main/adapters/cluj-napoca/docs" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-adapters/adapters/cluj-napoca/docs</a>.</p>
+      </article>
 
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
-          </span>
-          <div>
-            <h4>Route tags extension</h4>
-            <p>Night, metropolitan, airport express — derived from the route's short name (<code>25N</code>, <code>M26</code>, etc.) and stored in <code>_route_tags</code>. The app uses them as filters.</p>
-            <span class="tag">extension</span>
-          </div>
-        </div>
-
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><circle cx="8.5" cy="14.5" r="1" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1" fill="currentColor"/></svg>
-          </span>
-          <div>
-            <h4>GTFS networks + route_networks</h4>
-            <p>TE (Transport Elevi, the school transport lines) get their own network surface via the public spec — no extension table needed — so school runs and regular transit share the same map view.</p>
-          </div>
-        </div>
-
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          </span>
-          <div>
-            <h4>CTP CSV → proper GTFS</h4>
-            <p>CTP publishes timetables as CSVs. The adapter converts them to spec-compliant <code>stop_times</code>, including the GTFS Frequency model for headway-based routes.</p>
-          </div>
-        </div>
-
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a14.5 14.5 0 0 1 0 20"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/></svg>
-          </span>
-          <div>
-            <h4>OKLab route color fix</h4>
-            <p>Tranzy's published colors don't match the real-world livery. The adapter rewrites them using the OKLab color method so the map matches what you see at the stop.</p>
-          </div>
-        </div>
-
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </span>
-          <div>
-            <h4>Pre-configured speed &amp; busy hours</h4>
-            <p>Peak, off-peak, and night speeds plus peak windows — the static pipeline uses them to fill in intermediate stops when the upstream only publishes terminals.</p>
-          </div>
-        </div>
-
-        <div class="cluj-item">
-          <span class="ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-          </span>
-          <div>
-            <h4>Coming soon: Tranzy GTFS-RT</h4>
-            <p>Tranzy exposes a non-standard live feed. The adapter will convert it to standard protobuf GTFS-RT so the same <code>gtfs-rt</code> server can serve it.</p>
-            <span class="tag">future</span>
-          </div>
-        </div>
-
-      </div>
-
-      <p style="margin-top: 24px; font-size: 14px; color: var(--ink-muted);">Full architecture, assemble rules, quirks, and known limitations live in the adapter repo: <a href="https://github.com/n3ary/gtfs-adapters/tree/main/adapters/cluj-napoca/docs" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-adapters/adapters/cluj-napoca/docs</a>.</p>
+      <article class="adapter coming">
+        <header class="adapter-head">
+          <h4>More coming</h4>
+        </header>
+        <p class="adapter-lead">The contract is open. New adapters land here as more operators come online — each one is a separate <code>n3ary/gtfs-adapter-&lt;city&gt;</code> package, not a change to this site.</p>
+      </article>
     </section>
 
     <section class="scoped" id="org" aria-labelledby="org-h">

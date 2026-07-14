@@ -267,7 +267,7 @@
 
     /* --- Cluj callout ------------------------------------------------ */
 
-    .cluj-callout {
+    .extras-cta {
       display: flex; align-items: center; gap: 24px;
       flex-wrap: wrap;
       padding: 28px;
@@ -276,29 +276,29 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-card);
     }
-    .cluj-callout .body { flex: 1 1 320px; }
-    .cluj-callout h3 {
+    .extras-cta .body { flex: 1 1 320px; }
+    .extras-cta h3 {
       margin: 0 0 8px;
       font-size: 18px;
       font-weight: 700;
       color: var(--ink-strong);
     }
-    .cluj-callout p {
+    .extras-cta p {
       margin: 0 0 12px;
       color: var(--ink-muted);
       font-size: 15px;
     }
-    .cluj-callout a.more {
+    .extras-cta a.more {
       color: var(--indigo-light);
       font-weight: 500;
       display: inline-flex; align-items: center; gap: 4px;
     }
-    .cluj-callout a.more:hover { color: var(--ink); }
-    .cluj-callout a.more::after {
+    .extras-cta a.more:hover { color: var(--ink); }
+    .extras-cta a.more::after {
       content: "→";
       transition: transform 0.18s ease;
     }
-    .cluj-callout a.more:hover::after { transform: translateX(2px); }
+    .extras-cta a.more:hover::after { transform: translateX(2px); }
 
     /* --- Branding row ------------------------------------------------ */
 
@@ -597,9 +597,9 @@
       </div>
     </section>
 
-    <section class="scoped" id="cluj" aria-labelledby="cluj-h">
-      <h2 id="cluj-h">More in Cluj-Napoca</h2>
-      <p class="lead">Cluj-Napoca is the feed we go deepest on. If you ride there, you get a few extras the standard schedule doesn't carry.</p>
+    <section class="scoped" id="extensions" aria-labelledby="extensions-h">
+      <h2 id="extensions-h">Beyond standard GTFS</h2>
+      <p class="lead">Every feed does the standard GTFS work. Some adapters go further, adding extras that fit their operator's quirks. Here are the ones we ship today — each one is a separate per-feed adapter, not a change to the app.</p>
 
       <div class="grid">
 
@@ -647,11 +647,11 @@
 
       </div>
 
-      <div class="cluj-callout" style="margin-top: 24px;">
+      <div class="extras-cta" style="margin-top: 24px;">
         <div class="body">
           <h3>Want to know how all this is built?</h3>
-          <p>The Cluj-Napoca feed is a single per-feed adapter that reconciles three upstream sources, fixes direction metadata, and extends the standard GTFS spec with route tags and a dedicated school-transport network. The whole pipeline is open source.</p>
-          <a class="more" href="/developers/#cluj">Read about the Cluj adapter</a>
+          <p>Adapters are open source and self-contained. The Cluj-Napoca one is the most complete so far — three upstream sources reconciled, direction fix, route tags, and a dedicated school-transport network. The whole pipeline is on GitHub.</p>
+          <a class="more" href="/developers/#adapters">Read about the adapters</a>
         </div>
       </div>
     </section>
