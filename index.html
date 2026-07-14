@@ -6,17 +6,17 @@
   <meta name="theme-color" content="#0F172A">
   <meta name="color-scheme" content="dark light">
   <title>n3ary — open transit data, offline by default</title>
-  <meta name="description" content="n3ary — open transit data, offline by default. The home of an offline-first GTFS transit app, a multi-feed data pipeline, and the Cluj-Napoca feed adapter.">
+  <meta name="description" content="n3ary — a transit app that lives on your phone, works underground, and never sends your data anywhere. Built on open GTFS data.">
 
   <meta property="og:title" content="n3ary — open transit data, offline by default">
-  <meta property="og:description" content="Open transit data, offline by default. The home of an offline-first GTFS transit app, a multi-feed data pipeline, and the Cluj-Napoca feed adapter.">
+  <meta property="og:description" content="A transit app that lives on your phone, works underground, and never sends your data anywhere. Built on open GTFS data.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://website.n3ary.com">
   <meta property="og:image" content="/assets/social/social-preview.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="n3ary — open transit data, offline by default">
-  <meta name="twitter:description" content="Open transit data, offline by default. The home of an offline-first GTFS transit app, a multi-feed data pipeline, and the Cluj-Napoca feed adapter.">
+  <meta name="twitter:description" content="A transit app that lives on your phone, works underground, and never sends your data anywhere. Built on open GTFS data.">
   <meta name="twitter:image" content="/assets/social/social-preview.png">
 
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
@@ -173,7 +173,44 @@
       max-width: 640px;
     }
 
-    /* --- Projects grid ----------------------------------------------- */
+    /* --- Why n3ary (hero cards) ------------------------------------- */
+
+    .hero-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .hero-card {
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+    .hero-card .glyph {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(79, 70, 229, 0.12);
+      color: var(--indigo-light);
+      margin-bottom: 16px;
+    }
+    .hero-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+      color: var(--ink-strong);
+    }
+    .hero-card p {
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    /* --- Feature grid ------------------------------------------------ */
 
     .grid {
       display: grid;
@@ -196,52 +233,72 @@
     }
     .card h3 {
       margin: 0 0 8px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       color: var(--ink-strong);
-      display: flex; align-items: baseline; gap: 10px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 10px;
     }
-    .card h3 > span:first-child {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .card .tag {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(79, 70, 229, 0.12);
+    .card h3 .ico {
+      flex: 0 0 auto;
+      width: 20px; height: 20px;
       color: var(--indigo-light);
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: lowercase;
-      white-space: nowrap;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 0 1 auto;
     }
     .card p {
-      margin: 0 0 16px;
+      margin: 0;
       color: var(--ink-muted);
       font-size: 15px;
     }
-    .card .links {
-      margin-top: auto;
-      display: flex; gap: 14px;
-      font-size: 14px;
+    .card .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.10);
+      color: #4ADE80;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      width: fit-content;
     }
-    .card .links a {
+    @media (prefers-color-scheme: light) {
+      .card .badge { color: #15803D; background: rgba(34, 197, 94, 0.14); }
+    }
+
+    /* --- Cluj callout ------------------------------------------------ */
+
+    .extras-cta {
+      display: flex; align-items: center; gap: 24px;
+      flex-wrap: wrap;
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+    .extras-cta .body { flex: 1 1 320px; }
+    .extras-cta h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink-strong);
+    }
+    .extras-cta p {
+      margin: 0 0 12px;
+      color: var(--ink-muted);
+      font-size: 15px;
+    }
+    .extras-cta a.more {
       color: var(--indigo-light);
+      font-weight: 500;
       display: inline-flex; align-items: center; gap: 4px;
     }
-    .card .links a:hover { color: var(--ink); }
-    .card .links a::after {
+    .extras-cta a.more:hover { color: var(--ink); }
+    .extras-cta a.more::after {
       content: "→";
       transition: transform 0.18s ease;
     }
-    .card .links a:hover::after { transform: translateX(2px); }
+    .extras-cta a.more:hover::after { transform: translateX(2px); }
 
     /* --- Branding row ------------------------------------------------ */
 
@@ -369,6 +426,7 @@
       <span class="app-cta-arrow" aria-hidden="true">→</span>
     </a>
     <nav class="top-right" aria-label="Primary">
+      <a href="/developers/" rel="noopener">For developers</a>
       <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
       <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
     </nav>
@@ -385,42 +443,216 @@
       <div class="pill-row" aria-label="Highlights">
         <span class="pill"><span class="dot" aria-hidden="true"></span>Live GTFS-RT vehicles</span>
         <span class="pill">Offline-first PWA</span>
-        <span class="pill">Multi-feed SQL pipeline</span>
-        <span class="pill">Standard GTFS</span>
+        <span class="pill">Built on open data</span>
       </div>
     </section>
 
-    <section class="scoped" id="projects" aria-labelledby="projects-h">
-      <h2 id="projects-h">What we make</h2>
-      <p class="lead">A small set of repos that all share the same goal — clean transit data, in your hand, before you need it.</p>
+    <section class="scoped" id="why" aria-labelledby="why-h">
+      <h2 id="why-h">Why n3ary</h2>
+      <p class="lead">Two things we won't compromise on, because they make every other feature on this page possible.</p>
+
+      <div class="hero-cards">
+        <div class="hero-card">
+          <span class="glyph" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="11" width="14" height="10" rx="2"/>
+              <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+            </svg>
+          </span>
+          <h3>Stays on your device</h3>
+          <p>No account. No analytics. No background telemetry. Your stations, routes, and settings live on the phone — they never get sent back to a server.</p>
+        </div>
+        <div class="hero-card">
+          <span class="glyph" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 8.5C4 6 7 6 9 8.5L12 12l3-3.5C17 6 20 6 22 8.5"/>
+              <path d="M2 16.5C4 14 7 14 9 16.5L12 20l3-3.5C17 14 20 14 22 16.5"/>
+              <line x1="2" y1="2" x2="22" y2="2" stroke-dasharray="2 3" opacity="0.5"/>
+            </svg>
+          </span>
+          <h3>Works without a signal</h3>
+          <p>Schedules are downloaded once and stored locally, so the app keeps working underground, on a plane, or anywhere your signal gave up. Live vehicles appear when you have data; everything else is already there.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="scoped" id="ride" aria-labelledby="ride-h">
+      <h2 id="ride-h">Made for how you ride</h2>
+      <p class="lead">Small, deliberate features that take the friction out of the actual moment you need a bus.</p>
 
       <div class="grid">
 
         <article class="card">
-          <h3><span>App</span> <span class="tag">n3ary/app</span></h3>
-          <p>The offline-first transit app. Loads GTFS schedules into the browser, reconciles them with live GTFS-RT vehicle positions, and keeps working underground, on a plane, or anywhere your signal gave up.</p>
-          <div class="links">
-            <a href="https://github.com/n3ary/app" rel="noopener">Repo</a>
-          </div>
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Stations that matter
+          </h3>
+          <p>Pin your work, your city center, and your home. Routing and the nearby list reorder themselves around what you actually use.</p>
         </article>
 
         <article class="card">
-          <h3><span>Gtfs</span> <span class="tag">n3ary/gtfs-publisher</span></h3>
-          <p>The data side. A feed-agnostic orchestrator that reads each operator's source via a per-feed adapter package, builds a sqlite blob of the consolidated GTFS Schedule, and publishes both the sqlite and the raw <code>.gtfs.zip</code> to R2 for the app to consume offline.</p>
-          <div class="links">
-            <a href="https://github.com/n3ary/gtfs-publisher" rel="noopener">Repo</a>
-            <a href="https://github.com/n3ary/gtfs-publisher/tree/main/packages" rel="noopener">Packages</a>
-          </div>
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/>
+            </svg>
+            Favorite routes first
+          </h3>
+          <p>Mark a route as a favorite and it surfaces at the top of every station and every search — no scrolling to find the line you always take.</p>
         </article>
 
         <article class="card">
-          <h3><span>Per-feed adapters</span> <span class="tag">n3ary/gtfs-adapters</span></h3>
-          <p>One npm package per operator. Each adapter owns the source-specific knowledge — CSVs to scrape, APIs to call, route-color quirks, GTFS-RT recovery — and exposes a generic <code>/ingest</code> + <code>/static</code> surface that <code>n3ary/gtfs-publisher</code> drives without per-feed code.</p>
-          <div class="links">
-            <a href="https://github.com/n3ary/gtfs-adapters" rel="noopener">Repo</a>
-          </div>
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+              <line x1="9" y1="3" x2="9" y2="18"/>
+              <line x1="15" y1="6" x2="15" y2="21"/>
+            </svg>
+            Map view of every bus
+          </h3>
+          <p>Every live vehicle is plotted on the map in real time, with the route line behind it - so a glance tells you which bus is which, and the green dot marks the ones that are still live.</p>
         </article>
 
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Schedule view, optimised
+          </h3>
+          <p>Per-stop, per-route, per-day. The schedule view shows you what your ride actually looks like — not a wall of CSV.</p>
+        </article>
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Live + schedule, reconciled
+          </h3>
+          <p>Live GPS and the timetable are shown side by side, in the same row — so you can see whether the bus is early, late, or on time, without doing the math.</p>
+        </article>
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+              <line x1="3" y1="3" x2="21" y2="21"/>
+            </svg>
+            Works without your location
+          </h3>
+          <p>Fully usable on a device with no GPS, or for a rider who'd rather not grant it. Search, schedules, and favorites all work without location permission.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="scoped" id="long-haul" aria-labelledby="long-haul-h">
+      <h2 id="long-haul-h">Made for the long haul</h2>
+      <p class="lead">The boring stuff that decides whether you keep the app after week two.</p>
+
+      <div class="grid">
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Settings that stay on your phone
+          </h3>
+          <p>Every preference is stored locally. No server round-trips, no cross-device sync, no reset on reinstall — your settings are yours.</p>
+        </article>
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="23 4 23 10 17 10"/>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            </svg>
+            Updates that just happen
+          </h3>
+          <p>The app upgrades itself in the background. No app-store nag, no "please update to continue" wall — every rider gets the latest version the next time they open the app.</p>
+        </article>
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+            See what's new
+          </h3>
+          <p>The version of the app, the version of the data, and the timestamp of the last update are visible right in Settings — so you always know what's running on your phone.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="scoped" id="extensions" aria-labelledby="extensions-h">
+      <h2 id="extensions-h">Beyond standard GTFS</h2>
+      <p class="lead">Every feed does the standard GTFS work. Some adapters go further, adding extras that fit their operator's quirks. Here are the ones we ship today — each one is a separate per-feed adapter, not a change to the app.</p>
+
+      <div class="grid">
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <path d="M8 14l2 2 4-4" stroke="#22C55E"/>
+            </svg>
+            Fresh schedules every day
+          </h3>
+          <p>CTP's own CSV timetables flow in daily — so the app doesn't carry a stale autumn schedule into spring. <span class="badge">Cluj-Napoca</span></p>
+        </article>
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="9" x2="20" y2="9"/>
+              <line x1="4" y1="15" x2="20" y2="15"/>
+              <line x1="10" y1="3" x2="8" y2="21"/>
+              <line x1="16" y1="3" x2="14" y2="21"/>
+            </svg>
+            Filter routes by what they are
+          </h3>
+          <p>Night, metropolitan, airport express — the route tags surface as filters, so you can hide the lines that don't apply to the trip you're planning. <span class="badge">Cluj-Napoca</span></p>
+        </article>
+
+        <article class="card">
+          <h3>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="3" width="16" height="16" rx="2"/>
+              <path d="M4 11h16"/>
+              <path d="M9 19l-2 3"/>
+              <path d="M15 19l2 3"/>
+              <circle cx="8.5" cy="14.5" r="1" fill="currentColor"/>
+              <circle cx="15.5" cy="14.5" r="1" fill="currentColor"/>
+            </svg>
+            School transport on the map
+          </h3>
+          <p>The TE (Transport Elevi) school transport lines show up alongside the regular buses, with their own network color and station markers — so the school run is the same app as the regular ride. <span class="badge">Cluj-Napoca</span></p>
+        </article>
+
+      </div>
+
+      <div class="extras-cta" style="margin-top: 24px;">
+        <div class="body">
+          <h3>Want to know how all this is built?</h3>
+          <p>Adapters are open source and self-contained. The Cluj-Napoca one is the most complete so far — three upstream sources reconciled, direction fix, route tags, and a dedicated school-transport network. The whole pipeline is on GitHub.</p>
+          <a class="more" href="/developers/#adapters">Read about the adapters</a>
+        </div>
       </div>
     </section>
 
@@ -469,6 +701,7 @@
       <span>n3ary — open transit data, offline by default.</span>
       <nav class="links" aria-label="Footer">
         <a href="https://app.n3ary.com" rel="noopener">App</a>
+        <a href="/developers/" rel="noopener">For developers</a>
         <a href="https://github.com/n3ary" rel="noopener">GitHub</a>
         <a href="https://branding.n3ary.com" rel="noopener">Branding</a>
         <a href="https://github.com/n3ary/website/blob/main/LICENSE" rel="noopener" title="This website's source code is MIT — the projects (app, Gtfs, cluj adapter) are PolyForm Noncommercial 1.0.0, see note above">Site: MIT</a>

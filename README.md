@@ -1,19 +1,21 @@
 # n3ary/website
 
-The static, single-page marketing site for the
-[n3ary](https://github.com/n3ary) org. Lives at the apex
-[n3ary.com](https://n3ary.com). The app lives at
-[app.n3ary.com](https://app.n3ary.com).
+The static marketing site for the [n3ary](https://github.com/n3ary) org.
+Two views: a customer-facing home at the apex [n3ary.com](https://n3ary.com)
+and a developer-facing page at [n3ary.com/developers/](https://n3ary.com/developers/).
+The app lives at [app.n3ary.com](https://app.n3ary.com).
 
 ## What's here
 
 | File | Purpose |
 |---|---|
-| `index.html` | The single page. Dark-mode by default, brand-colored, system-font. |
+| `index.html` | Customer-facing home page. What the app does, in user terms. |
+| `developers/index.html` | Developer-facing page. The data pipeline, the adapter contract, the infrastructure. |
 | `404.html` | Friendly not-found page served by Cloudflare Pages on miss. |
 | `_headers` | Cache + security headers. |
 | `assets/` | Brand logo, favicon, social preview. Synced from [`n3ary/branding`](https://github.com/n3ary/branding). |
-| `.github/workflows/deploy.yml` | Cloudflare Pages deploy on every push to `main`. |
+| `.github/workflows/deploy-marketing.yml` | Cloudflare Pages deploy on every push to `main`. |
+| `.github/workflows/pr-check.yml` | PR validation (shared n3ary/actions base, ASCII check). |
 
 There is no build step. The site is the static file. Edit `index.html`,
 commit, push — the workflow takes it from there.
