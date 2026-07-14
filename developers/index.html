@@ -759,7 +759,7 @@
       <h2 id="adapters-h">Adapters</h2>
       <p class="lead">Every per-feed decision lives in an adapter package. The generic publisher has zero per-feed code; the source reconciliation, the per-feed validations, and the extensions that don't fit the public spec all sit inside one operator's adapter. The contract is the same for every adapter; the per-feed logic is whatever that feed needs.</p>
 
-      <h3 id="adapters-contract-h">The contract</h3>
+      <h3 id="adapters-contract-h">Adapter contract</h3>
       <p>Three subpaths, all dynamic-imported by the orchestrator. An adapter is just a published npm package that exposes them.</p>
 
       <div class="stack">
@@ -781,8 +781,8 @@
         </article>
       </div>
 
-      <h3 id="adapters-speed-h">Speed and busy hours, per feed</h3>
-      <p>For each feed we publish pre-configured speed profiles (peak / off-peak / night) and busy windows. The static pipeline uses them to propagate schedules to intermediate stops when the upstream feed only publishes terminals - no more "the bus magically teleports between two published times".</p>
+      <h4 id="adapters-speed-h">Per-feed defaults</h4>
+      <p>Each adapter ships its own speed profiles (peak / off-peak / night) and busy windows in <code>config.json</code>. The static pipeline uses them to propagate schedules to intermediate stops when the upstream feed only publishes terminals — no more "the bus magically teleports between two published times".</p>
 
       <div class="speed" aria-label="Cluj-Napoca defaults (illustrative)">
         <h3>Cluj-Napoca · timing</h3>
@@ -803,9 +803,11 @@
         </dl>
       </div>
 
+      <h4 id="adapters-cluj-h">Adapter list</h4>
+
       <article class="adapter">
         <header class="adapter-head">
-          <h3 id="adapters-cluj-h">Cluj-Napoca</h3>
+          <h5>Cluj-Napoca</h5>
           <span class="feed-badge">CTP Cluj-Napoca</span>
         </header>
         <p class="adapter-lead">The most complete adapter so far, shown here so the per-feed shape is concrete. To add a new adapter, copy the <code>cluj-napoca</code> package, replace the per-feed logic, and ship a new <code>feeds/&lt;city&gt;/config.json</code> entry in <a href="https://github.com/n3ary/gtfs-publisher" rel="noopener" style="color: var(--indigo-light);">n3ary/gtfs-publisher</a>. The cards below list what this one does.</p>
