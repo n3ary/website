@@ -633,18 +633,6 @@
         <article class="card">
           <h3>
             <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
-              <path d="M2 12h20"/>
-            </svg>
-            Colors that match the bus
-          </h3>
-          <p>Route colors are corrected against the real-world livery, not whatever the upstream feed happens to publish — so the map matches what you see at the stop. <span class="badge">Cluj-Napoca</span></p>
-        </article>
-
-        <article class="card">
-          <h3>
-            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="4" y="3" width="16" height="16" rx="2"/>
               <path d="M4 11h16"/>
               <path d="M9 19l-2 3"/>
@@ -652,9 +640,9 @@
               <circle cx="8.5" cy="14.5" r="1" fill="currentColor"/>
               <circle cx="15.5" cy="14.5" r="1" fill="currentColor"/>
             </svg>
-            Rail on the map
+            School transport on the map
           </h3>
-          <p>The TE (transport pe șine) rail network shows up alongside the buses, with its own network color and station markers — so the train and the bus to it are the same app. <span class="badge">Cluj-Napoca</span></p>
+          <p>The TE (Transport Elevi) school transport lines show up alongside the regular buses, with their own network color and station markers — so the school run is the same app as the regular ride. <span class="badge">Cluj-Napoca</span></p>
         </article>
 
       </div>
@@ -662,7 +650,7 @@
       <div class="cluj-callout" style="margin-top: 24px;">
         <div class="body">
           <h3>Want to know how all this is built?</h3>
-          <p>The Cluj-Napoca feed is a single per-feed adapter that reconciles three upstream sources, fixes direction metadata, and extends the standard GTFS spec with route tags, networks, and OKLab color matching. The whole pipeline is open source.</p>
+          <p>The Cluj-Napoca feed is a single per-feed adapter that reconciles three upstream sources, fixes direction metadata, and extends the standard GTFS spec with route tags and a dedicated school-transport network. The whole pipeline is open source.</p>
           <a class="more" href="/developers/#cluj">Read about the Cluj adapter</a>
         </div>
       </div>
